@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import Success from "./pages/success";
+import { useSession, signOut } from "next-auth/react";
 import haha from "./api/user-data";
 
-import NextAuth from "next-auth";declare module "next-auth" {
+import NextAuth from "next-auth";
+
+declare module "next-auth" {
   interface Session {
     accessToken?: string;
   }
@@ -12,7 +13,6 @@ import NextAuth from "next-auth";declare module "next-auth" {
 
 const generateState = () => {
   const state = Math.random().toString(36).substring(2);
-  localStorage.setItem('auth_state', state); 
   return state;
 };
 
@@ -22,6 +22,13 @@ const handleSignUp = () => {
   window.location.href = authUrl;
 };
 
+const clearCookies = () => {
+  const cookies = document.cookie.split("; ");
+  for (const cookie of cookies) {
+    const [name] = cookie.split("=");
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+  }
+};
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -37,6 +44,13 @@ export default function Home() {
       });
     }
   }, [status]);
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/" }); // Redirect to the home page or a custom URL after signout
+    clearCookies(); // Clear all cookies
+    setUserData(null); // Clear user data
+  };
+
   if (status === "loading") {
     return <div>Loading...</div>;
   }
@@ -48,28 +62,27 @@ export default function Home() {
         <button onClick={handleSignUp}>Sign Up with Intra 42</button>
       ) : (
         <div>
-       
-        {userData && <div>
-          Welcome {userData.login}! You are now signed in.
-          <p>
-            <strong>Email Address:</strong> {userData.email}
-          </p>
-          <p>
-            <strong>Phone Number:</strong> {userData.phone}
-          </p>
-          <p>
-            <strong>Location:</strong> {userData.location}
-          </p>
-          <p>
-          <img src={userData.image.link} alt="" />
-          </p>
-          
-        </div>}
-    
-          <a href="/api/auth/signout">Sign out</a>
-        
+          {userData && (
+            <div>
+              Welcome {userData.login}! You are now signed in.
+              <p>
+                <strong>Email Address:</strong> {userData.email}
+              </p>
+              <p>
+                <strong>Phone Number:</strong> {userData.phone}
+              </p>
+              <p>
+                <strong>Location:</strong> {userData.location}
+              </p>
+              <p>
+                <img src={userData.image.link} alt="Profile" />
+              </p>
+            </div>
+          )}
+          <button onClick={handleSignOut}>Sign out</button>
         </div>
       )}
     </div>
   );
 }
+
