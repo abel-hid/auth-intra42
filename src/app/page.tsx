@@ -27,7 +27,6 @@ const handleSignUp = () => {
 export default function Home() {
   const { data: session, status } = useSession();
   const [userData, setUserData] = useState<any>(null);
-  const [loadingUserData, setLoadingUserData] = useState<boolean>(true);
 
   useEffect(() => {
     if (status === "authenticated") 
@@ -36,7 +35,6 @@ export default function Home() {
       {
         setUserData(data);
         console.log(data);
-        setLoadingUserData(false);
       });
     }
   }, [status]);
