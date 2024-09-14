@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
-export default async function haha() {
+export default async function user_data() {
   const session = await getSession();
 
   if (!session?.accessToken) {

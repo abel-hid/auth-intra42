@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
-import haha from "./api/user-data";
+import user_data from "./api/user-data";
 
 import NextAuth from "next-auth";
 
@@ -32,7 +32,8 @@ export default function Home() {
   useEffect(() => {
     if (status === "authenticated") 
     {
-      haha().then((data) => {
+      user_data().then((data) => 
+      {
         setUserData(data);
         console.log(data);
         setLoadingUserData(false);
