@@ -22,13 +22,7 @@ const handleSignUp = () => {
   window.location.href = authUrl;
 };
 
-const clearCookies = () => {
-  const cookies = document.cookie.split("; ");
-  for (const cookie of cookies) {
-    const [name] = cookie.split("=");
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-  }
-};
+
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -46,9 +40,7 @@ export default function Home() {
   }, [status]);
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" }); // Redirect to the home page or a custom URL after signout
-    clearCookies(); // Clear all cookies
-    setUserData(null); // Clear user data
+    await signOut({ callbackUrl: "/" }); 
   };
 
   if (status === "loading") {
