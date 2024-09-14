@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
-export default async function haha(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+export default async function haha() {
+  const session = await getSession();
 
   if (!session?.accessToken) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return null;
   }
 
   console.log("session.accessToken", session.accessToken);
@@ -18,3 +18,6 @@ export default async function haha(req: NextApiRequest, res: NextApiResponse) {
     const data = await response.json();
     return data;
 }
+
+
+

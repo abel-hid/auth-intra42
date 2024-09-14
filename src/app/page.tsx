@@ -30,7 +30,8 @@ export default function Home() {
   const [loadingUserData, setLoadingUserData] = useState<boolean>(true);
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (status === "authenticated") 
+    {
       haha().then((data) => {
         setUserData(data);
         console.log(data);
