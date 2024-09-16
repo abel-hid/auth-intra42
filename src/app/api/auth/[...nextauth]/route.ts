@@ -1,5 +1,5 @@
 import NextAuth from "next-auth";
-import FortyTwoProvider,  { FortyTwoProfile } from "next-auth/providers/42-school";
+import FortyTwoProvider from "next-auth/providers/42-school";
 
 const options = {
   providers: [

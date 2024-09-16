@@ -7,7 +7,7 @@ import NextAuth from "next-auth";
 
 declare module "next-auth" {
   interface Session {
-    accessToken?: string;
+    accessToken: string;
   }
 }
 
@@ -18,7 +18,7 @@ const generateState = () => {
 
 const handleSignUp = () => {
   const state = generateState();
-  const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL}?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&state=${state}`;
+  const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL}?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&state=${state}`;
   window.location.href = authUrl;
 };
 
@@ -38,7 +38,8 @@ export default function Home() {
     }
   }, [status]);
 
-  const handleSignOut = async () => {
+  const handleSignOut = async () => 
+  {
     await signOut({ callbackUrl: "/" }); 
   };
 
