@@ -8,7 +8,6 @@ const options = {
       clientSecret: process.env.CLIENT_SECRET as string,
      
     }),
-    
   ],
   callbacks: {
     async jwt({ token, account }: { token: any, account: any }) 

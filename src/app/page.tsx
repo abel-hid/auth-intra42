@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut , signIn } from "next-auth/react";
 import user_data from "./api/user-data";
 
 import NextAuth from "next-auth";
@@ -17,9 +17,17 @@ const generateState = () => {
 };
 
 const handleSignUp = () => {
-  const state = generateState();
-  const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL}?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&state=${state}`;
-  window.location.href = authUrl;
+  // const state = generateState();
+  // const authUrl = `${process.env.NEXT_PUBLIC_AUTH_URL}?client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&state=${state}`;
+  // window.location.href = authUrl;
+  try
+  {
+    signIn("42-school");
+  }
+  catch (error)
+  {
+    console.error(error);
+  }
 };
 
 
